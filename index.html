@@ -130,12 +130,6 @@
             <button class="qf-btn" onclick="quickFill('mango')">🥭 Fruit Farm</button>
           </div>
         </div>
-        <div class="api-toggle-section" style="margin-top: 1.5rem; text-align: center; border-top: 1px solid var(--border); padding-top: 1.5rem;">
-          <label style="display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; cursor: pointer; color: var(--primary);">
-            <input type="checkbox" id="usePerenualAPI" onchange="togglePerenualAPI()" style="accent-color: var(--primary); transform: scale(1.2);">
-            🌍 Use Perenual Global Database
-          </label>
-        </div>
       </aside>
 
       <!-- RIGHT: Results Panel -->
@@ -267,20 +261,30 @@
   </div>
 
   <footer class="footer">
-    <p>🌾 Agro Farm Plus &copy; 2026 — Empowering Farmers with Smart Technology</p>
-    <p style="margin-top:0.4rem;">Built with ❤️ for the farming community</p>
+    <div class="footer-creator" style="display:flex; flex-direction:column; align-items:center; text-align:center; gap:0.5rem;">
+      <p style="font-size:1.1rem; font-weight:700; color:var(--text-primary); margin:0;">
+        👑 Crafted with Pride by <span style="background:linear-gradient(135deg, var(--green-600), var(--green-400)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;">Hrithik Raj</span> 
+        <span style="font-size:0.85rem; font-weight:600; color:var(--text-muted); opacity:0.9;">| 🎓 A VIT Student</span>
+      </p>
+      
+      <div style="margin:0.8rem 0; display:inline-block; padding:0.5rem 1.25rem; background:linear-gradient(135deg, rgba(234,179,8,0.15), rgba(202,138,4,0.05)); border:1.5px solid rgba(234,179,8,0.4); border-radius:50px; box-shadow:0 6px 16px rgba(234,179,8,0.15); transition:transform 0.3s ease;">
+        <span style="font-size:0.8rem; font-weight:800; color:var(--earth-600); letter-spacing:0.03em;">
+          🏆 India's First Author to Publish Two Books before 18
+        </span>
+      </div>
+      
+      <div style="margin-top:0.25rem;">
+        <a href="https://instagram.com/hrithikraj0008" target="_blank" style="display:inline-flex; align-items:center; gap:8px; font-weight:700; text-decoration:none; padding:6px 14px; border-radius:50px; background:#fff; border:1px solid var(--border); box-shadow:var(--shadow-sm); transition:all 0.3s ease;">
+          <span style="font-size:1.1rem;">📸</span> <span style="background:linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; font-size:0.85rem;">@hrithikraj0008</span>
+        </a>
+      </div>
+      
+      <p style="margin-top:1.5rem; font-size:0.8rem; color:var(--text-dim); font-weight:500;">
+        🌾 Agro Farm Plus &copy; 2026 — Empowering Farmers with Smart Technology
+      </p>
+    </div>
   </footer>
 
-  <!-- Perenual API Modal -->
-  <div id="perenualModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); z-index:999; align-items:center; justify-content:center;">
-    <div style="background:var(--card-bg); border: 1px solid var(--border); max-width:500px; width:90%; border-radius:12px; padding:2rem; position:relative; box-shadow:0 10px 25px rgba(0,0,0,0.5);">
-      <button onclick="document.getElementById('perenualModal').style.display='none'; document.getElementById('usePerenualAPI').checked=false;" style="position:absolute; right:1rem; top:1rem; background:none; border:none; font-size:1.2rem; cursor:pointer; color:var(--text-muted)">✕</button>
-      <h3 style="margin:0 0 1rem 0; color:var(--text)">🔑 Enter Perenual API Key</h3>
-      <p style="color:var(--text-dim); margin-bottom: 1.5rem; font-size: 0.95rem;">To access the global botanical database, please provide your free API key from <a href="https://perenual.com" target="_blank" style="color:var(--primary)">perenual.com</a>.</p>
-      <input type="text" id="perenualKeyInput" placeholder="sk-..." style="width:100%; padding:0.8rem; border:1px solid var(--border); border-radius:8px; background:var(--bg-page); color:var(--text); margin-bottom:1rem;">
-      <button class="btn btn-primary btn-full" onclick="savePerenualKey()">Save & Continue</button>
-    </div>
-  </div>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
