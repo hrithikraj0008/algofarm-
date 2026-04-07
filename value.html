@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Agro Farm Plus Value Addition — Compare normal farming vs advanced processing income. Calculate how much more you can earn."/>
+  <title>Value Addition — Agro Farm Plus</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="value.css"/>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="nav-brand">
+    <div class="brand-icon">🌾</div>
+    <span class="brand-name">Agro <span>Farm+</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">🏠 Home</a></li>
+    <li><a href="market.html">📊 Market</a></li>
+    <li><a href="schemes.html">🏦 Schemes</a></li>
+    <li><a href="disease.html">🦠 Disease</a></li>
+    <li><a href="value.html" class="active">🌿 Value Add</a></li>
+  </ul>
+</nav>
+
+<div class="page-wrapper">
+  <section class="hero">
+    <div class="hero-badge">🔥 Profit Multiplication Engine</div>
+    <h1>Value <span class="gradient-text">Addition</span> Module</h1>
+    <p>See exactly how much more you earn with simple processing — compare normal farming income vs advanced value-added farming.</p>
+    <div class="value-hero-stat">
+      <div class="vhs-item">
+        <span class="vhs-val">10x</span>
+        <span class="vhs-label">Max Multiplier</span>
+      </div>
+      <div class="vhs-divider"></div>
+      <div class="vhs-item">
+        <span class="vhs-val">₹50L+</span>
+        <span class="vhs-label">Potential Annual Revenue</span>
+      </div>
+      <div class="vhs-divider"></div>
+      <div class="vhs-item">
+        <span class="vhs-val">20+</span>
+        <span class="vhs-label">Processing Pathways</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+
+    <!-- ── FARMING INCOME COMPARISON CALCULATOR (FIRST) ── -->
+    <section class="section" id="calcSection">
+      <div class="section-header">
+        <h2>🧮 Farming Income Calculator</h2>
+        <p>Compare what you earn with normal farming vs advanced value-added farming — enter your details below</p>
+      </div>
+
+      <div class="mega-calculator card">
+
+        <!-- Inputs Row -->
+        <div class="calc-inputs-row">
+          <div class="calc-input-group">
+            <label>Select Crop / Product</label>
+            <select id="calcCrop" onchange="onCalcCropChange()">
+              <option value="">— Choose Crop —</option>
+            </select>
+          </div>
+          <div class="calc-input-group">
+            <label>Land Area (acres)</label>
+            <input type="number" id="calcAcres" placeholder="e.g. 2" min="0.1" step="0.5"/>
+          </div>
+          <div class="calc-input-group">
+            <label>Yield per Acre (kg)</label>
+            <input type="number" id="calcYield" placeholder="e.g. 2000" min="1"/>
+          </div>
+          <div class="calc-input-group">
+            <label>Farming Cost (₹/acre)</label>
+            <input type="number" id="calcCost" placeholder="e.g. 25000" min="0"/>
+          </div>
+          <div class="calc-input-group calc-btn-group">
+            <button class="btn btn-primary btn-full" onclick="runComparison()" id="compareBtn">
+              ⚡ Compare Now
+            </button>
+          </div>
+        </div>
+
+        <!-- Results: Before/After comparison -->
+        <div id="comparisonResult" style="display:none">
+
+          <!-- Big comparison banner -->
+          <div class="comparison-banner">
+            <div class="cb-side normal">
+              <div class="cb-icon">🌾</div>
+              <div class="cb-label">Normal Farming</div>
+              <div class="cb-desc">Sell raw at mandi price</div>
+              <div class="cb-amount" id="normalNetProfit">—</div>
+              <div class="cb-sublabel">Net Profit / Year</div>
+            </div>
+            <div class="cb-vs">
+              <div class="cb-arrow">VS</div>
+              <div class="cb-gain-text" id="gainText">—</div>
+            </div>
+            <div class="cb-side advanced">
+              <div class="cb-icon">🏭</div>
+              <div class="cb-label">Value-Added Farming</div>
+              <div class="cb-desc" id="advancedDesc">Process &amp; sell branded</div>
+              <div class="cb-amount gain" id="advancedNetProfit">—</div>
+              <div class="cb-sublabel">Net Profit / Year</div>
+            </div>
+          </div>
+
+          <!-- Detailed breakdown -->
+          <div class="comparison-breakdown">
+
+            <div class="breakdown-col">
+              <div class="breakdown-header normal-header">
+                <span>🌾 Normal Farming Breakdown</span>
+              </div>
+              <div class="bk-rows" id="normalBreakdown"></div>
+            </div>
+
+            <div class="breakdown-col">
+              <div class="breakdown-header advanced-header">
+                <span>🏭 Value-Added Farming Breakdown</span>
+              </div>
+              <div class="bk-rows" id="advancedBreakdown"></div>
+            </div>
+
+          </div>
+
+          <!-- Insight bar -->
+          <div class="calc-insight" id="calcInsight"></div>
+
+        </div>
+
+        <!-- Empty state -->
+        <div class="calc-empty" id="calcEmpty">
+          <div class="calc-empty-icon">📊</div>
+          <p>Fill in your crop, land area, yield and cost above — then click <strong>Compare Now</strong> to see the difference!</p>
+          <div class="calc-tips">
+            <span class="calc-tip">💡 Try: 2 acres of Turmeric with 2000 kg/acre yield</span>
+            <span class="calc-tip">💡 Try: 1 acre of Mango with 5000 kg/acre yield</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── VALUE CHAIN TABS ── -->
+    <div class="vc-tabs">
+      <button class="vc-tab active" onclick="setVCFilter('all', this)">All Categories</button>
+      <button class="vc-tab" onclick="setVCFilter('spice', this)">🌶️ Spices</button>
+      <button class="vc-tab" onclick="setVCFilter('dairy', this)">🥛 Dairy</button>
+      <button class="vc-tab" onclick="setVCFilter('fruit', this)">🍎 Fruits</button>
+      <button class="vc-tab" onclick="setVCFilter('oil', this)">🫙 Oils</button>
+      <button class="vc-tab" onclick="setVCFilter('fiber', this)">🧵 Fiber</button>
+    </div>
+
+    <!-- Value Addition Cards -->
+    <div class="section-header">
+      <h2>🌿 Processing Pathways</h2>
+      <p>Compare raw vs processed profit for each product</p>
+    </div>
+    <div class="value-grid" id="valueGrid"></div>
+
+    <!-- Processing Methods -->
+    <div class="section-header" style="margin-top:3rem">
+      <h2>⚙️ Processing Methods &amp; Investment</h2>
+      <p>Low-investment processing options for smallholder farmers</p>
+    </div>
+    <div class="methods-grid" id="methodsGrid"></div>
+
+    <!-- Success Stories -->
+    <div class="section-header" style="margin-top:3rem">
+      <h2>🏆 Farmer Success Stories</h2>
+      <p>Real transformations through value addition</p>
+  </div>
+
+  <footer class="footer">
+    <p>🌾 Agro Farm Plus &copy; 2026 — Profit figures are approximate based on market averages</p>
+  </footer>
+</div>
+
+<script src="value.js"></script>
+</body>
+</html>

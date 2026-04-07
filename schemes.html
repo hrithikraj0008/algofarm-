@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Government schemes for farmers — PM-KISAN, PMFBY crop insurance, KCC loans, and subsidies finder."/>
+  <title>Government Schemes — Agro Farm Plus</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="schemes.css"/>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="nav-brand">
+    <div class="brand-icon">🌾</div>
+    <span class="brand-name">Agro <span>Farm+</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">🏠 Home</a></li>
+    <li><a href="market.html">📊 Market</a></li>
+    <li><a href="schemes.html" class="active">🏦 Schemes</a></li>
+    <li><a href="disease.html">🦠 Disease</a></li>
+    <li><a href="value.html">🌿 Value Add</a></li>
+  </ul>
+</nav>
+
+<div class="page-wrapper">
+  <section class="hero" style="padding-bottom:2rem">
+    <div class="hero-badge">🏦 Government Farmer Support</div>
+    <h1>Scheme <span class="gradient-text">Finder</span></h1>
+    <p>Discover government schemes, subsidies, and benefits you're eligible for — all in one place.</p>
+  </section>
+
+  <div class="container">
+
+    <!-- Eligibility Check Banner -->
+    <div class="eligibility-banner">
+      <div class="elig-icon">✅</div>
+      <div class="elig-text">
+        <h3>Quick Eligibility Check</h3>
+        <p>Over <strong>₹6,500 crore</strong> disbursed to Indian farmers via PM-KISAN this year. Are you getting your share?</p>
+      </div>
+      <button class="btn btn-primary" onclick="scrollToSchemes()">Check Now →</button>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="scheme-stats">
+      <div class="stat-card">
+        <div class="stat-icon">💰</div>
+        <div class="stat-value">₹6K</div>
+        <div class="stat-label">Annual Income Support</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🛡️</div>
+        <div class="stat-value">95%</div>
+        <div class="stat-label">Crop Insurance Coverage</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🏦</div>
+        <div class="stat-value">3%</div>
+        <div class="stat-label">KCC Loan Interest</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🌱</div>
+        <div class="stat-value">30+</div>
+        <div class="stat-label">Active Schemes</div>
+      </div>
+    </div>
+
+    <!-- Filter Controls -->
+    <div class="schemes-controls" id="schemes-section">
+      <div class="scheme-search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="schemeSearch" placeholder="Search schemes..." oninput="filterSchemes()"/>
+      </div>
+      <div class="cat-tabs">
+        <button class="cat-tab active" data-cat="all" onclick="setCatFilter('all', this)">All</button>
+        <button class="cat-tab" data-cat="income" onclick="setCatFilter('income', this)">💰 Income</button>
+        <button class="cat-tab" data-cat="insurance" onclick="setCatFilter('insurance', this)">🛡️ Insurance</button>
+        <button class="cat-tab" data-cat="loan" onclick="setCatFilter('loan', this)">🏦 Loans</button>
+        <button class="cat-tab" data-cat="subsidy" onclick="setCatFilter('subsidy', this)">🎁 Subsidies</button>
+        <button class="cat-tab" data-cat="market" onclick="setCatFilter('market', this)">📊 Market</button>
+      </div>
+    </div>
+
+    <!-- Results Count -->
+    <div class="results-meta">
+      <span id="schemeCount">Showing all 12 schemes</span>
+    </div>
+
+    <!-- Schemes Grid -->
+    <div class="schemes-grid" id="schemesGrid"></div>
+
+    <!-- Apply Guide -->
+    <div class="apply-guide">
+      <div class="section-header">
+        <h2>📋 How to Apply</h2>
+        <p>Simple steps to access government agricultural benefits</p>
+      </div>
+      <div class="steps-row">
+        <div class="step-card">
+          <div class="step-num">01</div>
+          <div class="step-icon">📋</div>
+          <h4>Gather Documents</h4>
+          <p>Aadhaar, bank account, land records (Khasra/Khatauni), and mobile number linked to Aadhaar.</p>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-card">
+          <div class="step-num">02</div>
+          <div class="step-icon">🌐</div>
+          <h4>Visit Portal</h4>
+          <p>Go to pmkisan.gov.in or your state's agriculture portal. Register as a new farmer.</p>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-card">
+          <div class="step-num">03</div>
+          <div class="step-icon">✏️</div>
+          <h4>Fill Application</h4>
+          <p>Enter landholding details, crop information, and bank account for direct benefit transfer.</p>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-card">
+          <div class="step-num">04</div>
+          <div class="step-icon">✅</div>
+          <h4>Get Benefits</h4>
+          <p>DBT to your bank account within 30 days. Track status via PM-KISAN mobile app.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <p>🌾 Agro Farm Plus &copy; 2026 — Scheme information is indicative. Verify on official government portals.</p>
+  </footer>
+</div>
+
+<script src="schemes.js"></script>
+</body>
+</html>

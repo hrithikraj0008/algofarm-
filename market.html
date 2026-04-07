@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Agro Farm Plus Market Dashboard — Real-time crop price tracking, trends, and market insights for Indian farmers."/>
+  <title>Market Dashboard — Agro Farm Plus</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="market.css"/>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="nav-brand">
+    <div class="brand-icon">🌾</div>
+    <span class="brand-name">Agro <span>Farm+</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">🏠 Home</a></li>
+    <li><a href="market.html" class="active">📊 Market</a></li>
+    <li><a href="schemes.html">🏦 Schemes</a></li>
+    <li><a href="disease.html">🦠 Disease</a></li>
+    <li><a href="value.html">🌿 Value Add</a></li>
+  </ul>
+</nav>
+
+<div class="page-wrapper">
+  <section class="hero" style="padding-bottom:2rem">
+    <div class="hero-badge">📊 Live Market Intelligence</div>
+    <h1>Crop <span class="gradient-text">Market Dashboard</span></h1>
+    <p>Monitor price trends, compare market rates, and make smarter selling decisions.</p>
+  </section>
+
+  <div class="container">
+
+    <!-- Market Summary Bar -->
+    <div class="market-summary">
+      <div class="ms-item">
+        <span class="ms-icon">📈</span>
+        <div>
+          <span class="ms-val rising" id="risingCount">—</span>
+          <span class="ms-label">Rising</span>
+        </div>
+      </div>
+      <div class="ms-divider"></div>
+      <div class="ms-item">
+        <span class="ms-icon">📉</span>
+        <div>
+          <span class="ms-val falling" id="fallingCount">—</span>
+          <span class="ms-label">Falling</span>
+        </div>
+      </div>
+      <div class="ms-divider"></div>
+      <div class="ms-item">
+        <span class="ms-icon">⚡</span>
+        <div>
+          <span class="ms-val stable" id="stableCount">—</span>
+          <span class="ms-label">Stable</span>
+        </div>
+      </div>
+      <div class="ms-divider"></div>
+      <div class="ms-item">
+        <span class="ms-icon">🏆</span>
+        <div>
+          <span class="ms-val gold" id="topCrop">—</span>
+          <span class="ms-label">Top Earner</span>
+        </div>
+      </div>
+      <div class="ms-divider"></div>
+      <div class="ms-item">
+        <span class="ms-icon">🕐</span>
+        <div>
+          <span class="ms-val" id="lastUpdated">—</span>
+          <span class="ms-label">Last Updated</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search & Filter -->
+    <div class="market-controls">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="cropSearch" placeholder="Search crops..." oninput="filterMarket()"/>
+      </div>
+      <div class="filter-tabs">
+        <button class="ftab active" onclick="setFilter('all', this)">All</button>
+        <button class="ftab rising-tab" onclick="setFilter('rising', this)">📈 Rising</button>
+        <button class="ftab falling-tab" onclick="setFilter('falling', this)">📉 Falling</button>
+        <button class="ftab stable-tab" onclick="setFilter('stable', this)">⚡ Stable</button>
+      </div>
+      <div class="sort-wrap">
+        <select id="sortBy" onchange="sortMarket()">
+          <option value="default">Sort: Default</option>
+          <option value="price-high">Price: High to Low</option>
+          <option value="price-low">Price: Low to High</option>
+          <option value="change-high">Change: High</option>
+          <option value="name">Name: A-Z</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Highlight Cards: Top Movers -->
+    <div class="section-header">
+      <h2>🔥 Today's Top Movers</h2>
+      <p>Biggest price changes in the market today</p>
+    </div>
+    <div class="top-movers" id="topMovers"></div>
+
+    <hr class="divider"/>
+
+    <!-- Main Price Grid -->
+    <div class="section-header">
+      <h2>🌾 All Crop Prices</h2>
+      <p id="resultCountLabel">Loading market data...</p>
+    </div>
+
+    <div class="price-grid" id="priceGrid"></div>
+
+    <!-- Price Chart Section -->
+    <div class="chart-section">
+      <div class="section-header">
+        <h2>📈 Price Trend Chart</h2>
+        <p>7-day price history for selected crops</p>
+      </div>
+      <div class="chart-container card">
+        <div class="chart-header">
+          <div class="chart-legend" id="chartLegend"></div>
+          <select id="chartCropSelect" onchange="updateChart()">
+            <option value="">Select crop for chart</option>
+          </select>
+        </div>
+        <div class="chart-area" id="chartArea">
+          <div class="chart-placeholder">
+            <span style="font-size:2.5rem">📊</span>
+            <p>Select a crop above to view its 7-day price history</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Market Insights -->
+    <div class="section-header" style="margin-top:2.5rem">
+      <h2>💡 Market Insights</h2>
+      <p>AI-generated recommendations based on price movements</p>
+    </div>
+    <div class="insights-grid" id="insightsGrid"></div>
+
+  </div>
+
+  <footer class="footer">
+    <p>🌾 Agro Farm Plus &copy; 2026 — Market data is simulated for demonstration purposes</p>
+  </footer>
+</div>
+
+<script src="market.js"></script>
+</body>
+</html>

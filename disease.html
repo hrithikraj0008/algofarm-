@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Agro Farm Plus Disease Tracker — Identify crop diseases, severity levels, and get organic or chemical treatment solutions."/>
+  <title>Disease Tracker — Agro Farm Plus</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="disease.css"/>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="nav-brand">
+    <div class="brand-icon">🌾</div>
+    <span class="brand-name">Agro <span>Farm+</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">🏠 Home</a></li>
+    <li><a href="market.html">📊 Market</a></li>
+    <li><a href="schemes.html">🏦 Schemes</a></li>
+    <li><a href="disease.html" class="active">🦠 Disease</a></li>
+    <li><a href="value.html">🌿 Value Add</a></li>
+  </ul>
+</nav>
+
+<div class="page-wrapper">
+  <section class="hero" style="padding-bottom:2rem">
+    <div class="hero-badge">🦠 Crop Health Intelligence</div>
+    <h1>Disease <span class="gradient-text">Tracker</span></h1>
+    <p>Identify crop diseases early, assess severity, and get expert-recommended treatment solutions.</p>
+  </section>
+
+  <div class="container">
+
+    <!-- Alert Banner -->
+    <div class="disease-alert-banner">
+      <span class="alert-pulse"></span>
+      <span class="alert-icon">⚠️</span>
+      <div class="alert-content">
+        <strong>Seasonal Alert — April 2026:</strong> Rice blast and Tomato leaf curl virus activity reported in Karnataka, AP, and Maharashtra. Take preventive action.
+      </div>
+      <button class="btn btn-outline btn-sm" onclick="scrollToSearch()">Check My Crop</button>
+    </div>
+
+    <!-- Disease Selection Layout -->
+    <div class="disease-layout">
+
+      <!-- Select Panel -->
+      <aside class="disease-select-panel">
+        <div class="panel-header">
+          <h3>🔍 Select Your Crop</h3>
+          <p>Choose a crop to see all known diseases and treatments</p>
+        </div>
+
+        <div class="form-group" style="margin-bottom:1rem">
+          <label>Crop Type</label>
+          <select id="cropSelect" onchange="loadDiseases()">
+            <option value="">— Select Crop —</option>
+            <option value="rice">🌾 Rice</option>
+            <option value="wheat">🌾 Wheat</option>
+            <option value="tomato">🍅 Tomato</option>
+            <option value="cotton">💮 Cotton</option>
+            <option value="sugarcane">🎋 Sugarcane</option>
+            <option value="potato">🥔 Potato</option>
+            <option value="mango">🥭 Mango</option>
+            <option value="turmeric">🟡 Turmeric</option>
+            <option value="onion">🧅 Onion</option>
+            <option value="chilli">🌶️ Chilli</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Filter by Severity</label>
+          <div class="severity-filters" id="severityFilters">
+            <button class="sev-btn active" onclick="setSeverity('all', this)">All</button>
+            <button class="sev-btn high-sev" onclick="setSeverity('high', this)">🔴 High</button>
+            <button class="sev-btn med-sev" onclick="setSeverity('medium', this)">🟡 Medium</button>
+            <button class="sev-btn low-sev" onclick="setSeverity('low', this)">🟢 Low</button>
+          </div>
+        </div>
+
+        <!-- Seasonal Alert Box -->
+        <div class="seasonal-tips" id="seasonalTips" style="display:none">
+          <h4>🌡️ Seasonal Risk Factors</h4>
+          <div id="seasonalContent"></div>
+        </div>
+
+        <!-- Crop Health Score -->
+        <div class="crop-health-score" id="cropHealthScore" style="display:none">
+          <h4>📊 Crop Vulnerability Score</h4>
+          <div class="health-meter">
+            <div class="health-bar" id="healthBar"></div>
+          </div>
+          <p class="health-label" id="healthLabel"></p>
+        </div>
+      </aside>
+
+      <!-- Disease Results -->
+      <main class="disease-results" id="diseaseResults">
+        <div class="empty-state" id="diseaseEmptyState">
+          <div class="empty-icon floating">🌿</div>
+          <h3>Select a Crop</h3>
+          <p>Choose a crop from the panel to view associated diseases, symptoms, and treatment protocols.</p>
+          <div class="feature-pills">
+            <span class="fpill">🔬 Symptoms</span>
+            <span class="fpill">💊 Treatments</span>
+            <span class="fpill">🛡️ Prevention</span>
+          </div>
+        </div>
+
+        <div id="diseaseContent" style="display:none">
+          <div class="disease-header-row">
+            <div>
+              <h2 id="selectedCropTitle">—</h2>
+              <p id="diseaseSubtitle" style="color:var(--text-muted);font-size:0.875rem;margin-top:4px;"></p>
+            </div>
+            <div id="diseaseCountBadge" class="disease-count-badge"></div>
+          </div>
+          <div class="disease-cards-grid" id="diseaseCardsGrid"></div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Prevention Tips -->
+    <div class="prevention-section">
+      <div class="section-header">
+        <h2>🛡️ General Prevention Guide</h2>
+        <p>Best practices to keep your crops healthy year-round</p>
+      </div>
+      <div class="prevention-grid">
+        <div class="prev-card">
+          <div class="prev-icon">💧</div>
+          <h4>Proper Irrigation</h4>
+          <p>Avoid over-watering. Use drip irrigation to keep leaves dry and reduce fungal growth.</p>
+        </div>
+        <div class="prev-card">
+          <div class="prev-icon">🌀</div>
+          <h4>Crop Rotation</h4>
+          <p>Rotate different crop families each season to break pest and disease cycles naturally.</p>
+        </div>
+        <div class="prev-card">
+          <div class="prev-icon">🌱</div>
+          <h4>Resistant Varieties</h4>
+          <p>Plant certified disease-resistant seed varieties available from state agricultural departments.</p>
+        </div>
+        <div class="prev-card">
+          <div class="prev-icon">🔬</div>
+          <h4>Soil Testing</h4>
+          <p>Test soil pH and nutrients regularly. Balanced nutrition reduces plant susceptibility to diseases.</p>
+        </div>
+        <div class="prev-card">
+          <div class="prev-icon">🦟</div>
+          <h4>Pest Monitoring</h4>
+          <p>Use sticky traps and pheromone traps for early pest detection. Scout fields twice per week.</p>
+        </div>
+        <div class="prev-card">
+          <div class="prev-icon">♻️</div>
+          <h4>Sanitation</h4>
+          <p>Remove and destroy infected plant material. Clean tools between plots to prevent spread.</p>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <p>🌾 Agro Farm Plus &copy; 2026 — Disease information sourced from ICAR and state agriculture departments</p>
+  </footer>
+</div>
+
+<script src="disease.js"></script>
+</body>
+</html>

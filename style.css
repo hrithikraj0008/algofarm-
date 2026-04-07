@@ -1,0 +1,192 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Segoe UI",sans-serif;
+}
+
+body{
+background:#f4f7f4;
+color:#333;
+}
+
+/* NAVBAR */
+.navbar{
+display:flex;
+justify-content:space-between;
+padding:15px 40px;
+background:#2e7d32;
+color:white;
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+.navbar ul{
+display:flex;
+list-style:none;
+}
+
+.navbar li{
+margin-left:20px;
+}
+
+.navbar a{
+color:white;
+text-decoration:none;
+}
+
+/* HERO */
+.hero{
+height:90vh;
+display:flex;
+align-items:center;
+justify-content:center;
+background:linear-gradient(135deg,#a8e063,#56ab2f);
+color:white;
+text-align:center;
+}
+
+.hero h1{
+font-size:48px;
+}
+
+.hero button{
+margin-top:15px;
+padding:12px 25px;
+background:#FFD54F;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+/* SECTION */
+.analysis{
+padding:40px;
+}
+
+/* CARD */
+.card{
+background:white;
+padding:25px;
+margin-bottom:25px;
+border-radius:12px;
+box-shadow:0 4px 12px rgba(0,0,0,0.1);
+animation:fadeIn 0.5s ease;
+}
+
+/* LAND GRID */
+.land-grid{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:10px;
+}
+
+.plot{
+height:90px;
+background:#c8e6c9;
+border-radius:8px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.plot:hover{
+transform:scale(1.05);
+background:#81c784;
+}
+
+.plot.active{
+background:#1b5e20;
+}
+
+/* FORM */
+.form-group{
+margin-top:15px;
+}
+
+.form-group input,
+.form-group select{
+width:100%;
+padding:10px;
+margin-top:5px;
+}
+
+/* PROFIT BUTTONS */
+.profit-buttons{
+display:flex;
+gap:10px;
+}
+
+.profit-buttons button{
+flex:1;
+padding:10px;
+border:none;
+background:#ddd;
+cursor:pointer;
+border-radius:5px;
+}
+
+.profit-buttons button.active{
+background:#2e7d32;
+color:white;
+}
+
+/* BUTTON */
+.analyze-btn{
+margin-top:20px;
+width:100%;
+padding:12px;
+background:#2e7d32;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+/* RESULTS */
+.best-crop{
+background:#e8f5e9;
+padding:20px;
+border-left:6px solid #2e7d32;
+border-radius:10px;
+font-size:18px;
+}
+
+.crop-container{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+gap:15px;
+margin-top:20px;
+}
+
+.crop-card{
+background:white;
+padding:15px;
+border-radius:10px;
+text-align:center;
+box-shadow:0 3px 10px rgba(0,0,0,0.1);
+transition:0.3s;
+}
+
+.crop-card:hover{
+transform:translateY(-5px);
+}
+
+.bar{
+height:8px;
+background:#ddd;
+border-radius:5px;
+margin-top:10px;
+}
+
+.fill{
+height:100%;
+background:#2e7d32;
+border-radius:5px;
+}
+
+/* ANIMATION */
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(10px);}
+to{opacity:1;transform:translateY(0);}
+}

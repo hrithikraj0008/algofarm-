@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Agro Farm Plus — Smart Agriculture Intelligence. AI-powered crop recommendations with real-time profit comparison."/>
+  <title>Agro Farm Plus — Smart Crop Recommendation</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css"/>
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="index.css"/>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="nav-brand">
+    <div class="brand-icon">🌾</div>
+    <span class="brand-name">Agro <span>Farm+</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">🏠 Home</a></li>
+    <li><a href="market.html">📊 Market</a></li>
+    <li><a href="schemes.html">🏦 Schemes</a></li>
+    <li><a href="disease.html">🦠 Disease</a></li>
+    <li><a href="value.html">🌿 Value Add</a></li>
+  </ul>
+</nav>
+
+<div class="page-wrapper">
+
+  <!-- HERO -->
+  <section class="hero" style="min-height: 75vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 2rem 1rem; margin-bottom: 3rem;">
+    <div class="hero-badge">🤖 AI-Powered Crop Intelligence</div>
+    <h1>Maximize Your Farm's<br/><span class="gradient-text">Profit Potential</span></h1>
+    <p>Draw your farm on the map, enter soil conditions, and get AI-powered crop recommendations with instant profit comparison.</p>
+    <div class="hero-stats">
+      <div class="hstat"><span class="hstat-val">200+</span><span class="hstat-label">Crop Varieties</span></div>
+      <div class="hstat-divider"></div>
+      <div class="hstat"><span class="hstat-val">3x</span><span class="hstat-label">Avg Profit Boost</span></div>
+      <div class="hstat-divider"></div>
+      <div class="hstat"><span class="hstat-val">50K+</span><span class="hstat-label">Farmers Helped</span></div>
+    </div>
+  </section>
+
+  <div class="container">
+
+    <!-- MAP -->
+    <section class="section">
+      <div class="section-header">
+        <h2>🗺️ Select Your Farm Land</h2>
+        <p>Search your location, then draw your farm boundary. Area is auto-detected and used in profit calculations.</p>
+      </div>
+      <div class="map-section card">
+        <div class="map-toolbar">
+          <div class="map-search-wrap">
+            <div class="map-search-icon">🔍</div>
+            <input type="text" id="mapSearchInput" placeholder="Search location (e.g., Pune, Maharashtra)…" class="map-search-input"/>
+            <button class="btn btn-sm map-search-btn" onclick="searchLocation()">Search</button>
+          </div>
+          <div class="map-controls-right">
+            <button class="map-tool-btn active" id="drawBtn" onclick="setMapTool('draw')">✏️ Draw Plot</button>
+            <button class="map-tool-btn" onclick="deleteSelectedShape()">🗑️ Delete</button>
+            <button class="map-tool-btn" onclick="clearAllShapes()">✖ Clear All</button>
+          </div>
+        </div>
+        <div id="farmMap"></div>
+        <div class="map-footer">
+          <div class="map-stat"><span class="map-stat-icon">📐</span><span class="map-stat-label">Total Area:</span><span class="map-stat-val" id="totalAreaDisplay">0 acres</span></div>
+          <div class="map-stat"><span class="map-stat-icon">🔷</span><span class="map-stat-label">Plots:</span><span class="map-stat-val" id="plotCountDisplay">0</span></div>
+          <div class="map-stat"><span class="map-stat-icon">📍</span><span class="map-stat-label">Location:</span><span class="map-stat-val" id="locationDisplay">—</span></div>
+          <div class="map-instructions"><span>💡 Click to draw · Double-click to finish · Area auto-used in calculations</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIN LAYOUT -->
+    <div class="main-layout">
+
+      <!-- LEFT: Input Panel -->
+      <aside class="input-panel">
+        <div class="panel-header">
+          <h3>📝 Land Profile</h3>
+          <p>Enter your conditions for personalized crop recommendations</p>
+        </div>
+        <div class="form-group">
+          <label>Soil Type</label>
+          <select id="soilType">
+            <option value="">— Select Soil —</option>
+            <option value="loamy">🟫 Loamy</option>
+            <option value="sandy">🏜️ Sandy</option>
+            <option value="clay">🧱 Clay</option>
+            <option value="silt">💧 Silt</option>
+            <option value="black">⚫ Black (Regur)</option>
+            <option value="red">🔴 Red Laterite</option>
+            <option value="alluvial">🌊 Alluvial</option>
+            <option value="peaty">🌿 Peaty</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Rainfall (mm/year)</label>
+          <div class="input-with-hint">
+            <input type="number" id="rainfall" placeholder="e.g. 800" min="0" max="5000"/>
+            <span class="input-hint">Typical: 400–2500mm</span>
+          </div>
+          <div class="range-track"><div class="range-fill" id="rainfallFill"></div></div>
+        </div>
+        <div class="form-group">
+          <label>Temperature (°C)</label>
+          <div class="input-with-hint">
+            <input type="number" id="temperature" placeholder="e.g. 25" min="-10" max="55"/>
+            <span class="input-hint">Typical: 15–40°C</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Profit Preference</label>
+          <div class="profit-options">
+            <button class="profit-opt" id="profit-low" onclick="setProfit('low')"><span class="profit-icon">💵</span><span class="profit-name">Low Risk</span><span class="profit-sub">Stable</span></button>
+            <button class="profit-opt" id="profit-medium" onclick="setProfit('medium')"><span class="profit-icon">💰</span><span class="profit-name">Medium</span><span class="profit-sub">Balanced</span></button>
+            <button class="profit-opt active" id="profit-high" onclick="setProfit('high')"><span class="profit-icon">🤑</span><span class="profit-name">High Yield</span><span class="profit-sub">Max profit</span></button>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-full" id="analyzeBtn" onclick="analyzeAndRecommend()">
+          <span id="analyzeBtnText">🚀 Analyze &amp; Recommend</span>
+        </button>
+        <div class="quick-fill-section">
+          <p class="quick-fill-label">Quick Load:</p>
+          <div class="quick-fills">
+            <button class="qf-btn" onclick="quickFill('rice')">🌾 Rice Belt</button>
+            <button class="qf-btn" onclick="quickFill('turmeric')">🟡 Spice Zone</button>
+            <button class="qf-btn" onclick="quickFill('mango')">🥭 Fruit Farm</button>
+          </div>
+        </div>
+        <div class="api-toggle-section" style="margin-top: 1.5rem; text-align: center; border-top: 1px solid var(--border); padding-top: 1.5rem;">
+          <label style="display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; cursor: pointer; color: var(--primary);">
+            <input type="checkbox" id="usePerenualAPI" onchange="togglePerenualAPI()" style="accent-color: var(--primary); transform: scale(1.2);">
+            🌍 Use Perenual Global Database
+          </label>
+        </div>
+      </aside>
+
+      <!-- RIGHT: Results Panel -->
+      <main class="results-panel" id="resultsPanel">
+
+        <!-- Empty state -->
+        <div class="empty-state" id="emptyState">
+          <div class="empty-icon floating">🌱</div>
+          <h3>Ready to Analyze</h3>
+          <p>Draw your farm on the map, fill in land details and click "Analyze &amp; Recommend"</p>
+          <div class="feature-pills">
+            <span class="fpill">🎯 AI Scoring</span>
+            <span class="fpill">📈 Profit Projections</span>
+            <span class="fpill">⚡ Auto Comparison</span>
+          </div>
+        </div>
+
+        <!-- Results -->
+        <div id="resultsContent" style="display:none">
+
+          <!-- Top Recommendation -->
+          <div class="top-recommendation" id="topRecCard">
+            <div class="top-rec-badge">⭐ TOP RECOMMENDATION</div>
+            <div class="top-rec-body">
+              <div class="top-rec-icon" id="topIcon">🌿</div>
+              <div class="top-rec-info">
+                <h2 id="topCropName">—</h2>
+                <p id="topCropDesc">—</p>
+                <div class="top-rec-meta">
+                  <div class="meta-item"><span class="meta-label">Expected Profit</span><span class="meta-val profit-val" id="topProfit">—</span></div>
+                  <div class="meta-item"><span class="meta-label">Suitability Score</span><span class="meta-val score-val" id="topScore">—</span></div>
+                  <div class="meta-item"><span class="meta-label">Value Multiplier</span><span class="meta-val mult-val" id="topMult">—</span></div>
+                </div>
+                <div class="profit-bar-wrap" style="margin-top:12px"><div class="profit-bar" id="topProfitBar"></div></div>
+              </div>
+            </div>
+            <div class="top-rec-tags" id="topTags"></div>
+          </div>
+
+          <!-- All Recommendations -->
+          <div class="section-header" style="margin-top:2rem">
+            <h2>🌿 All Recommendations</h2>
+            <p id="resultsSummary"></p>
+          </div>
+
+          <!-- Crop Grid — click a card → inline comparison opens below -->
+          <div class="click-hint-bar">
+            <span>👆 Click any crop card below to see a detailed profit comparison for your farm</span>
+          </div>
+          <div class="crop-grid" id="cropGrid"></div>
+
+          <!-- ── INLINE SMART COMPARISON PANEL ── -->
+          <div id="smartComparison" class="smart-comparison-panel" style="display:none">
+            <div class="scp-header">
+              <div class="scp-title-row">
+                <div>
+                  <div class="scp-badge">⚡ Smart Profit Comparison</div>
+                  <div class="scp-subtitle" id="scpSubtitle">Auto-calculated using your map area</div>
+                </div>
+                <button class="scp-close" onclick="closeSmartComparison()">✕ Close</button>
+              </div>
+            </div>
+
+            <!-- Side-by-side columns -->
+            <div class="scp-compare-grid">
+
+              <!-- Normal Farming -->
+              <div class="scp-col normal-col">
+                <div class="scp-col-header">
+                  <span class="scp-col-icon">🌾</span>
+                  <div>
+                    <div class="scp-col-title">Normal Farming</div>
+                    <div class="scp-col-sub" id="baselineCropName">Rice (Mandi Price)</div>
+                  </div>
+                </div>
+                <div class="scp-rows" id="normalRows"></div>
+                <div class="scp-net-box normal-net-box" id="normalNetDiv"></div>
+              </div>
+
+              <!-- VS -->
+              <div class="scp-vs-col">
+                <div class="scp-vs-circle">VS</div>
+                <div class="scp-extra-gain" id="extraGainDiv"></div>
+              </div>
+
+              <!-- Suggested Crop -->
+              <div class="scp-col suggested-col">
+                <div class="scp-col-header">
+                  <span class="scp-col-icon" id="suggestedIcon">🌿</span>
+                  <div>
+                    <div class="scp-col-title">Suggested Crop</div>
+                    <div class="scp-col-sub" id="suggestedCropName">—</div>
+                  </div>
+                </div>
+                <div class="scp-rows" id="suggestedRows"></div>
+                <div class="scp-net-box suggested-net-box" id="suggestedNetDiv"></div>
+              </div>
+
+            </div>
+
+            <!-- Insight -->
+            <div class="scp-insight" id="scpInsight"></div>
+
+            <!-- CTAs -->
+            <div class="scp-cta">
+              <a href="value.html" class="btn btn-primary">🏭 See Value-Addition Potential</a>
+              <a href="market.html" class="btn btn-outline">📊 Check Market Prices</a>
+            </div>
+          </div>
+
+          <!-- Input Analysis -->
+          <div class="analysis-summary card" id="analysisSummary" style="margin-top:2rem">
+            <h3 style="margin-bottom:1rem;">📊 Input Analysis</h3>
+            <div class="analysis-grid" id="analysisGrid"></div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+
+  </div><!-- /container -->
+
+  <!-- CROP DETAIL MODAL (full detail on double-click) -->
+  <div id="cropModal" class="crop-modal-overlay" onclick="closeCropModal(event)">
+    <div class="crop-modal-box" id="cropModalBox">
+      <button class="crop-modal-close" onclick="closeCropModal()">✕</button>
+      <div id="cropModalContent"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>🌾 Agro Farm Plus &copy; 2026 — Empowering Farmers with Smart Technology</p>
+    <p style="margin-top:0.4rem;">Built with ❤️ for the farming community</p>
+  </footer>
+
+  <!-- Perenual API Modal -->
+  <div id="perenualModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); z-index:999; align-items:center; justify-content:center;">
+    <div style="background:var(--card-bg); border: 1px solid var(--border); max-width:500px; width:90%; border-radius:12px; padding:2rem; position:relative; box-shadow:0 10px 25px rgba(0,0,0,0.5);">
+      <button onclick="document.getElementById('perenualModal').style.display='none'; document.getElementById('usePerenualAPI').checked=false;" style="position:absolute; right:1rem; top:1rem; background:none; border:none; font-size:1.2rem; cursor:pointer; color:var(--text-muted)">✕</button>
+      <h3 style="margin:0 0 1rem 0; color:var(--text)">🔑 Enter Perenual API Key</h3>
+      <p style="color:var(--text-dim); margin-bottom: 1.5rem; font-size: 0.95rem;">To access the global botanical database, please provide your free API key from <a href="https://perenual.com" target="_blank" style="color:var(--primary)">perenual.com</a>.</p>
+      <input type="text" id="perenualKeyInput" placeholder="sk-..." style="width:100%; padding:0.8rem; border:1px solid var(--border); border-radius:8px; background:var(--bg-page); color:var(--text); margin-bottom:1rem;">
+      <button class="btn btn-primary btn-full" onclick="savePerenualKey()">Save & Continue</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+<script src="index.js"></script>
+</body>
+</html>
